@@ -1,0 +1,14 @@
+{
+    "guest_working_dir" : "/home/irods",
+    "guest_input_subdir" : "input",
+    "guest_output_subdir" : "output",
+    "detach": false,
+    "environment": {
+                     "INPUT_DIR" : "input",
+                     "OUTPUT_DIR" : "output",
+                     "DEGREES_ROTATION": "25",
+                     "PLOTTING": "False"
+    },
+    "image": "jupyter_sobel:latest",
+    "run_command": ["sh", "-c", "jupyter nbconvert --to notebook --execute sobel.ipynb --output $OUTPUT_DIR/sobel_out.ipynb"]
+}
