@@ -1,0 +1,33 @@
+FROM jupyter/scipy-notebook
+
+ARG  irods_uid=999
+ARG  irods_gid=999
+ARG  notebook_port=8888
+ENV  NOTEBOOK_PORT ${notebook_port}
+
+# -- Optional -- upgrade conda:
+# USER jovyan
+# RUN  /opt/conda/bin/conda update -n base conda
+
+USER root
+RUN  groupadd -g ${irods_gid} irods
+RUN  useradd -m -d /home/irods -s /bin/bash \
+       -u ${irods_uid} -g ${irods_gid} irods
+RUN  usermod -G irods jovyan
+RUN  chown -R irods.irods /home/jovyan
+RUN  su - irods -c "/opt/conda/bin/conda init bash"
+
+# -- Optional -- add packages & channels here via pip & conda:
+#      USER jovyan
+#      RUN  pip install ipyleaflet
+#      RUN  conda install -y geopandas
+#      RUN  conda install -y -c conda-forge affine
+#      RUN  conda config --add channels conda-forge
+#      RUN  conda install -y python-primesieve
+
+WORKDIR /home/irods
+COPY sobel.ipynb .
+
+USER irods
+
+CMD [ "bash", "-c", "jupyter notebook --ip 0.0.0.0 --port ${NOTEBOOK_PORT}" ]

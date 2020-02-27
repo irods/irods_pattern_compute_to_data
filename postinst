@@ -1,0 +1,15 @@
+if [ -f /etc/irods/service_account.config ] ; then
+  . /etc/irods/service_account.config 2> /dev/null
+else
+  IRODS_SERVICE_ACCOUNT_NAME=`stat --format "%U" /var/lib/irods`
+  IRODS_SERVICE_GROUP_NAME=`stat --format "%G" /var/lib/irods`
+fi
+
+chown $IRODS_SERVICE_ACCOUNT_NAME:$IRODS_SERVICE_GROUP_NAME /var/lib/irods
+chown $IRODS_SERVICE_ACCOUNT_NAME:$IRODS_SERVICE_GROUP_NAME /var/lib/irods/msiExecCmd_bin
+chown $IRODS_SERVICE_ACCOUNT_NAME:$IRODS_SERVICE_GROUP_NAME /var/lib/irods/sobel_execute.json
+chown $IRODS_SERVICE_ACCOUNT_NAME:$IRODS_SERVICE_GROUP_NAME /var/lib/irods/sobel_notebook.json
+chown $IRODS_SERVICE_ACCOUNT_NAME:$IRODS_SERVICE_GROUP_NAME /etc/irods/bytes_unicode_mapper.py
+chown $IRODS_SERVICE_ACCOUNT_NAME:$IRODS_SERVICE_GROUP_NAME /etc/irods/compute_container.py
+chown $IRODS_SERVICE_ACCOUNT_NAME:$IRODS_SERVICE_GROUP_NAME /etc/irods/compute_to_data_routing.re
+chown $IRODS_SERVICE_ACCOUNT_NAME:$IRODS_SERVICE_GROUP_NAME /etc/irods/container_calls.re
